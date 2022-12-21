@@ -25,6 +25,7 @@ int main(int argc, char *argv[])
   char *curptr, *newptr;
   idx_t options[METIS_NOPTIONS];
   graph_t *graph;
+  graph_t *graphcontig;
   idx_t *part;
   idx_t objval;
   params_t *params;
@@ -34,6 +35,7 @@ int main(int argc, char *argv[])
 
   gk_startcputimer(params->iotimer);
   graph = ReadGraph(params->filename);
+  graphcontig = graph;
 
   ReadTPwgts(params, graph->ncon);
   gk_stopcputimer(params->iotimer);
@@ -43,6 +45,15 @@ int main(int argc, char *argv[])
     printf("***The input graph is not contiguous.\n"
            "***The specified -contig option will be ignored.\n");
     params->contig = 0;
+  }
+
+  if (!params->contig && params->contiggraphfile) {
+    printf("The -contig option was either not specified or ignored.\n"
+           "The specified -contiggraph option will be ignored.\n");
+  }
+
+  if (params->contig && params->contiggraphfile) {
+    graphcontig = ReadGraph(params->contiggraphfile);
   }
 
   /* Get ubvec if supplied */
