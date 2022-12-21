@@ -56,6 +56,7 @@ typedef struct {
   char *outfile;
   char *xyzfile;
   char *tpwgtsfile;
+  char *contiggraphfile;
   char *ubvecstr;
 
   idx_t wgtflag;
@@ -71,4 +72,4 @@ typedef struct {
 } params_t;
 
 
-#endif 
+#endif

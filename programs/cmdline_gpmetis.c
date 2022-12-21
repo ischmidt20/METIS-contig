@@ -11,11 +11,11 @@
 
 
 /*-------------------------------------------------------------------
- * Command-line options 
+ * Command-line options
  *-------------------------------------------------------------------*/
 static struct gk_option long_options[] = {
   {"ptype",          1,      0,      METIS_OPTION_PTYPE},
-  {"objtype",        1,      0,      METIS_OPTION_OBJTYPE}, 
+  {"objtype",        1,      0,      METIS_OPTION_OBJTYPE},
 
   {"ctype",          1,      0,      METIS_OPTION_CTYPE},
   {"iptype",         1,      0,      METIS_OPTION_IPTYPE},
@@ -40,6 +40,7 @@ static struct gk_option long_options[] = {
 
   {"tpwgts",         1,      0,      METIS_OPTION_TPWGTS},
   {"ubvec",          1,      0,      METIS_OPTION_UBVEC},
+  {"contiggraph",    1,      0,      METIS_OPTION_CONTIGGRAPH},
 
   {"seed",           1,      0,      METIS_OPTION_SEED},
 
@@ -222,7 +223,7 @@ static char shorthelpstr[][100] = {
 "          use 'gpmetis -help' for a summary of the options.",
 ""
 };
- 
+
 
 
 /*************************************************************************
@@ -265,6 +266,7 @@ params_t *parse_cmdline(int argc, char *argv[])
   params->dbglvl        = 0;
 
   params->tpwgtsfile    = NULL;
+  params->contiggraphfile    = NULL;
 
   params->filename      = NULL;
   params->nparts        = 1;
@@ -344,6 +346,10 @@ params_t *parse_cmdline(int argc, char *argv[])
         if (gk_optarg) params->tpwgtsfile = gk_strdup(gk_optarg);
         break;
 
+      case METIS_OPTION_CONTIGGRAPH:
+        if (gk_optarg) params->contiggraphfile = gk_strdup(gk_optarg);
+        break;
+
       case METIS_OPTION_UBVEC:
         if (gk_optarg) params->ubvecstr = gk_strdup(gk_optarg);
         break;
@@ -391,8 +397,8 @@ params_t *parse_cmdline(int argc, char *argv[])
 
   params->filename = gk_strdup(argv[gk_optind++]);
   params->nparts   = atoi(argv[gk_optind++]);
-    
-  if (params->nparts < 2) 
+
+  if (params->nparts < 2)
     errexit("The number of partitions should be greater than 1!\n");
 
 
@@ -417,5 +423,3 @@ params_t *parse_cmdline(int argc, char *argv[])
 
   return params;
 }
-
-
