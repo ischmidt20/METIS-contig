@@ -93,6 +93,7 @@ int main(int argc, char *argv[])
   options[METIS_OPTION_DROPEDGES] = params->dropedges;
   options[METIS_OPTION_MINCONN]   = params->minconn;
   options[METIS_OPTION_CONTIG]    = params->contig;
+  options[METIS_OPTION_CONTIGGRAPH] = params->contiggraphfile;
   options[METIS_OPTION_SEED]      = params->seed;
   options[METIS_OPTION_NIPARTS]   = params->niparts;
   options[METIS_OPTION_NITER]     = params->niter;
@@ -115,7 +116,7 @@ int main(int argc, char *argv[])
       status = METIS_PartGraphKway(&graph->nvtxs, &graph->ncon, graph->xadj,
                    graph->adjncy, graph->vwgt, graph->vsize, graph->adjwgt,
                    &params->nparts, params->tpwgts, params->ubvec, options,
-                   &objval, part);
+                   &objval, part, graphcontig->adjncy);
       break;
 
   }
